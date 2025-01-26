@@ -1,0 +1,21 @@
+
+
+###
+get http://localhost:5000/auth/get
+###
+post http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "email":"saurabh.kr026@gmail.com",
+    "name":"satyam",
+    "password":"satyam"
+}
+
+###
+post http://localhost:5000/auth/verifyemail
+Content-Type: application/json
+
+{
+    "code":"584067"
+}

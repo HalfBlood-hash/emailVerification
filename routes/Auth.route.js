@@ -1,0 +1,10 @@
+
+import express from "express"
+import { getusername, register, verifyemail } from "../controllers/Auth.js";
+
+const AuthRoute=express.Router();
+AuthRoute.post('/register',register);
+AuthRoute.get('/get',getusername)
+AuthRoute.post('/verifyemail',verifyemail);
+
+export default AuthRoute
