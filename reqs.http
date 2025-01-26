@@ -7,7 +7,7 @@ post http://localhost:5000/auth/register
 Content-Type: application/json
 
 {
-    "email":"saurabh.kr026@gmail.com",
+    "email":"2309000satyam@gmail.com",
     "name":"satyam",
     "password":"satyam"
 }
@@ -17,5 +17,13 @@ post http://localhost:5000/auth/verifyemail
 Content-Type: application/json
 
 {
-    "code":"584067"
+    "code":"911038"
+}
+
+###
+post http://localhost:5000/auth/resend
+Content-Type: application/json
+
+{
+    "email":"2309000satyam@gmail.com"
 }

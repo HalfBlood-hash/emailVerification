@@ -38,16 +38,41 @@ const verifyemail=async(req,res)=>{
     let userlist =req.body;
     console.log(userlist);
     let user=await usermodel.findOne({verificationCode:userlist.code})
+    
+
     if(!user)
     {
-       return res.status(400).json({success:true,message:"Code is expored or invalid"})
+        return res.status(400).json({success:true,message:"invalid otp "})
     }
-    console.log(user)
+        
+    console.log("verify email",user)
+    let currTime=new Date().getTime();
+    let timestamp=user.createdAt
+    let time = new Date(timestamp);
+    console.log(typeof(time));
+    time.setTime(time.getTime() + 5 * 60 * 1000);
+    if(currTime>=time)
+    {
+        return res.status(400).json({success:true,message:"otp expired"})
+    }
+
     user.isVerifed=true;
     user.verificationCode=undefined
     await user.save();
     welcomeEmail(user.email,user.name)
     res.status(200).json({success:true,message:"Verification successful"})
-
 }
-export {register ,getusername,verifyemail}
+
+
+const resendOpt=async(req,res)=>{
+    let reqbody=req.body;
+    let user =await usermodel.findOne({email:reqbody.email})
+    let code1=Math.floor(100000+Math.random()*900000).toString();
+    user.verificationCode=code1
+    user.time=new Date().getTime();
+    let newcode=await user.save();
+    sendEmailverification(user.email,user.verificationCode)
+    res.status(200).json({success:true,message:"New code is send",Payload:newcode.verificationCode})
+}
+
+export {register ,getusername,verifyemail,resendOpt}

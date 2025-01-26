@@ -22,7 +22,8 @@ const userSchema= new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    verificationCode:String
+    verificationCode:String,
+    
 },{timestamps:true})
 const usermodel=mongoose.model("user",userSchema)
 
