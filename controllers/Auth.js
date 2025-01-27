@@ -47,7 +47,7 @@ const verifyemail=async(req,res)=>{
         
     console.log("verify email",user)
     let currTime=new Date().getTime();
-    let timestamp=user.createdAt
+    let timestamp=user.updatedAt
     let time = new Date(timestamp);
     console.log(typeof(time));
     time.setTime(time.getTime() + 5 * 60 * 1000);
@@ -69,7 +69,7 @@ const resendOpt=async(req,res)=>{
     let user =await usermodel.findOne({email:reqbody.email})
     let code1=Math.floor(100000+Math.random()*900000).toString();
     user.verificationCode=code1
-    user.time=new Date().getTime();
+    // user.createdAt=new Date();
     let newcode=await user.save();
     sendEmailverification(user.email,user.verificationCode)
     res.status(200).json({success:true,message:"New code is send",Payload:newcode.verificationCode})
