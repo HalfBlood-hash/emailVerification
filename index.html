@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Vimeo Video with Fixed Dimensions</title>
+    <style>
+        .coh-container {
+            position: relative;
+            width: 1140px;  /* Fixed width */
+            height: 341px;  /* Fixed height */
+            margin: auto;   /* Center the container */
+            background-color: #000; /* Optional: Add a background color */
+        }
+        .coh-video {
+            width: 100%;
+            height: 100%;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Remove the default border of the iframe */
+        }
+        .coh-button {
+            margin-top: 20px; /* Margin to position buttons below the video */
+        }
+        .transcript_button_view_text_1,
+        .transcript_button_hide_text_1 {
+            position: relative;
+            left: 0; /* Align buttons to the left */
+        }
+        .poster {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('path/to/your-poster-image.jpg') no-repeat center center;
+            background-size: cover;
+            cursor: pointer;
+            z-index: 1;
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2; /* Ensure the play button is above the poster */
+        }
+    </style>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+</head>
+<body>
+
+<div class="coh-container show_video_transcript ssa-instance-e6d9292277ea1cd39ebcfc4a5f736642 coh-ce-cpt_casgevycompanionca_video_com-4e1aa90a">
+    <div class="coh-container coh-ce-cpt_casgevycompanionca_video_com-fd1a1edf">
+        <div class="coh-video coh-ce-cpt_casgevycompanionca_video_com-db01655f coh-video-vimeo_iframe coh-video-hide-center-play coh-video-hide-controls">
+            <span class="mejs__offscreen">Video Player</span>
+            <iframe id="vimeoVideo" src="https://player.vimeo.com/video/1017609370" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <div class="poster" id="poster">
+                <button class="play-button" id="playButton">▶️</button>
+            </div>
+        </div>
+    </div>
+    <button class="coh-button transcript_button_view_text_1 button-modified-state-plus coh-style-focusable-content white ssa-instance-e6d9292277ea1cd39ebcfc4a5f736642 coh-ce-cpt_casgevycompanionca_video_com-36d3489a coh-interaction" data-interaction-modifiers='[{"modifierType":"","interactionScope":"document"}]' data-coh-settings='{ "xl":{"buttonAnimation":[{"animationType":"none"}]} }' type="button" data-once="coh-toggle-modifier-init coh-animation-init">Open Transcript</button>
+    <button class="coh-button transcript_button_hide_text_1 coh-style-focusable-content white ssa-instance-e6d9292277ea1cd39ebcfc4a5f736642 coh-ce-cpt_casgevycompanionca_video_com-5d97b7cc coh-interaction" data-interaction-modifiers='[{"modifierType":"","interactionScope":"document"}]' data-coh-settings='{ "xl":{"buttonAnimation":[{"animationType":"none"}]} }' type="button" data-once="coh-toggle-modifier-init coh-animation-init">Close Transcript</button>
+    <div class="coh-wysiwyg transcript_content_1 coh-ce-cpt_casgevycompanionca_video_com-85755557" data-ssa-field-uuid="75477f22-b7f1-4a9a-8573-173a07bfc0db" data-ssa-form-type="form-wysiwyg">
+        <p style="color:#fff;">This is transcript content. It can be any text or even formatted HTML. Click "Close Transcript" to close this.</p>
+    </div>
+</div>
+
+<script>
+    const iframe = document.getElementById('vimeoVideo');
+    const player = new Vimeo.Player(iframe);
+    const playButton = document.getElementById('playButton');
+    const poster = document.getElementById('poster');
+
+    playButton.addEventListener('click', () => {
+        player.play().then(() => {
+            poster.style.display = 'none';
+        }).catch(error => {
+            console.error('Error playing the video:', error);
+        });
+    });
+
+    player.on('play', () => {
+        poster.style.display = 'none';
+    });
+
+    player.on('pause', () => {
+        poster.style.display = 'flex';
+    });
+
+    player.on('ended', () => {
+        poster.style.display = 'flex';
+    });
+</script>
+
+</body>
+</html>
